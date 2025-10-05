@@ -1,28 +1,32 @@
-const sample = [
-  { title: "Voorbeeld Item 1", desc: "Beschrijving…", thumb: "https://picsum.photos/seed/1/600/400", url: "#" },
-  { title: "Voorbeeld Item 2", desc: "Beschrijving…", thumb: "https://picsum.photos/seed/2/600/400", url: "#" },
-  { title: "Voorbeeld Item 3", desc: "Beschrijving…", thumb: "https://picsum.photos/seed/3/600/400", url: "#" }
-];
-
-function render(list){
+async function loadGames() {
+  const res = await fetch('games.json');
+  const games = await res.json();
   const grid = document.getElementById('grid');
-  const tpl = document.getElementById('card-tpl');
-  grid.innerHTML = '';
-  list.forEach(item=>{
-    const node = tpl.content.cloneNode(true);
-    node.querySelector('.thumb').src = item.thumb;
-    node.querySelector('.title').textContent = item.title;
-    node.querySelector('.desc').textContent = item.desc;
-    const a = document.createElement('a');
-    a.href = item.url; a.textContent = 'Bekijk'; a.target = '_blank';
-    node.querySelector('.actions').appendChild(a);
-    grid.appendChild(node);
+  const template = document.getElementById('card-template');
+
+  function render(list) {
+    grid.innerHTML = '';
+    list.forEach(game => {
+      const card = template.content.cloneNode(true);
+      card.querySelector('.thumb').src = game.thumb;
+      card.querySelector('.thumb').alt = game.title;
+      card.querySelector('.title').textContent = game.title;
+      card.querySelector('.desc').textContent = game.desc;
+      card.querySelector('.download').href = game.downloadUrl;
+      grid.appendChild(card);
+    });
+  }
+
+  // Zoekfunctie
+  document.getElementById('search').addEventListener('input', e => {
+    const q = e.target.value.toLowerCase();
+    const filtered = games.filter(g =>
+      (g.title + g.desc).toLowerCase().includes(q)
+    );
+    render(filtered);
   });
+
+  render(games);
 }
 
-document.getElementById('search').addEventListener('input', e=>{
-  const q = e.target.value.toLowerCase();
-  render(sample.filter(s => (s.title + ' ' + s.desc).toLowerCase().includes(q)));
-});
-
-render(sample);
+loadGames().catch(console.error);
