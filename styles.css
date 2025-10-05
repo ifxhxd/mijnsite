@@ -1,41 +1,19 @@
-async function init(){
-  const res = await fetch('games.json');
-  const games = await res.json();
-  const grid = document.getElementById('grid');
-  const tpl = document.getElementById('card-tpl');
-
-  function makeTag(text){
-    const el = document.createElement('span'); el.className='tag'; el.textContent=text; return el;
-  }
-
-  function render(list){
-    grid.innerHTML='';
-    list.forEach(g=>{
-      const node = tpl.content.cloneNode(true);
-      node.querySelector('.thumb').src = g.thumb;
-      node.querySelector('.thumb').alt = g.title;
-      node.querySelector('.title').textContent = g.title;
-      node.querySelector('.desc').textContent = g.desc;
-      const tagsEl = node.querySelector('.tags');
-      (g.tags||[]).forEach(t=>tagsEl.appendChild(makeTag(t)));
-
-      const cta = node.querySelector('.cta');
-      if(g.storeUrl){
-        const a = document.createElement('a'); a.href=g.storeUrl; a.textContent='Bekijk in winkel'; a.target='_blank'; cta.appendChild(a);
-      }
-      if(g.downloadUrl){
-        const d = document.createElement('a'); d.href=g.downloadUrl; d.textContent='Download'; d.target='_blank'; cta.appendChild(d);
-      }
-      grid.appendChild(node);
-    });
-  }
-
-  document.getElementById('search').addEventListener('input', e=>{
-    const q = e.target.value.toLowerCase();
-    render(games.filter(g => (g.title+' '+g.desc+' '+(g.tags||[]).join(' ')).toLowerCase().includes(q)));
-  });
-
-  render(games);
-}
-
-init().catch(e=>console.error(e));
+:root{--bg:#0b1220;--card:#0f1b2a;--accent:#06b6d4;color:#e8f8ff}
+*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,Arial;background:var(--bg);color:var(--accent)}
+header{display:flex;justify-content:space-between;align-items:center;padding:12px 20px;background:#061322}
+header h1{margin:0;font-size:18px}
+header nav a{color:var(--accent);text-decoration:none}
+.container{max-width:1000px;margin:20px auto;padding:10px}
+#search{width:100%;padding:10px;border-radius:6px;border:1px solid #123;background:#062528;color:#fff;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.card{background:var(--card);border-radius:8px;padding:0;overflow:hidden;display:flex;flex-direction:column}
+.thumb{width:100%;height:160px;object-fit:cover;background:#123}
+.info{padding:12px}
+.title{margin:0 0 6px;font-size:16px;color:#fff}
+.desc{margin:0 0 8px;color:#bfe}
+.actions{margin-top:8px}
+.actions a{display:inline-block;padding:8px 10px;border-radius:6px;background:var(--accent);color:#002;text-decoration:none;margin-right:8px}
+input, textarea, button {width:100%;padding:8px;margin:6px 0;border-radius:6px;border:1px solid #123;background:#041820;color:#fff}
+button{cursor:pointer}
+#status{margin-top:10px;color:#fff}
