@@ -1,16 +1,20 @@
 [
   {
-    "id": "trds",
-    "title": "Totally Reliable Delivery Service",
-    "desc": "Chaotisch pakketjes bezorgen met ragdoll physics.",
-    "thumb": "https://cdn.cloudflare.steamstatic.com/steam/apps/1011670/header.jpg",
-    "downloadUrl": "https://store.steampowered.com/app/1011670/"
+    "id":"trds",
+    "title":"Totally Reliable Delivery Service",
+    "desc":"Ragdoll delivery chaos — co-op/competitive.",
+    "thumb":"https://cdn.cloudflare.steamstatic.com/steam/apps/1334310/header.jpg",
+    "tags":["co-op","indie","fun"],
+    "storeUrl":"https://store.steampowered.com/app/1334310/Totally_Reliable_Delivery_Service/",
+    "downloadHost":"store"           // indicatie: store / itch / release / cloud
   },
   {
-    "id": "game2",
-    "title": "Mijn Tweede Game",
-    "desc": "Nog een leuke game met een downloadknop.",
-    "thumb": "https://picsum.photos/seed/game2/600/300",
-    "downloadUrl": "https://example.com/mijngame.zip"
+    "id":"myfree",
+    "title":"Mijn Free Game",
+    "desc":"Eigen gemaakte gratis game, direct download.",
+    "thumb":"https://picsum.photos/seed/myfree/600/300",
+    "tags":["free","indie"],
+    "downloadUrl":"https://github.com/gebruikersnaam/repo/releases/download/v1.0/myfreegame.zip",
+    "downloadHost":"github"
   }
 ]
