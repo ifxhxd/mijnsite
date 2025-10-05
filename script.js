@@ -17,7 +17,6 @@ async function loadGames() {
     });
   }
 
-  // Zoekfunctie
   document.getElementById('search').addEventListener('input', e => {
     const q = e.target.value.toLowerCase();
     const filtered = games.filter(g =>
