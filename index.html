@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Mijn Gratis Website</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Mijn Site</h1>
+    <input id="search" placeholder="Zoek..." />
+  </header>
+
+  <main>
+    <section id="grid" class="grid"></section>
+  </main>
+
+  <template id="card-tpl">
+    <article class="card">
+      <img class="thumb" src="" alt="">
+      <div class="info">
+        <h2 class="title"></h2>
+        <p class="desc"></p>
+        <div class="actions"></div>
+      </div>
+    </article>
+  </template>
+
+  <script src="script.js" type="module"></script>
+</body>
+</html>
