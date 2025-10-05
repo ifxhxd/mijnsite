@@ -1,73 +1,41 @@
-body {
-  margin: 0;
-  font-family: system-ui, sans-serif;
-  background: #0f172a;
-  color: #f0f0f0;
+async function init(){
+  const res = await fetch('games.json');
+  const games = await res.json();
+  const grid = document.getElementById('grid');
+  const tpl = document.getElementById('card-tpl');
+
+  function makeTag(text){
+    const el = document.createElement('span'); el.className='tag'; el.textContent=text; return el;
+  }
+
+  function render(list){
+    grid.innerHTML='';
+    list.forEach(g=>{
+      const node = tpl.content.cloneNode(true);
+      node.querySelector('.thumb').src = g.thumb;
+      node.querySelector('.thumb').alt = g.title;
+      node.querySelector('.title').textContent = g.title;
+      node.querySelector('.desc').textContent = g.desc;
+      const tagsEl = node.querySelector('.tags');
+      (g.tags||[]).forEach(t=>tagsEl.appendChild(makeTag(t)));
+
+      const cta = node.querySelector('.cta');
+      if(g.storeUrl){
+        const a = document.createElement('a'); a.href=g.storeUrl; a.textContent='Bekijk in winkel'; a.target='_blank'; cta.appendChild(a);
+      }
+      if(g.downloadUrl){
+        const d = document.createElement('a'); d.href=g.downloadUrl; d.textContent='Download'; d.target='_blank'; cta.appendChild(d);
+      }
+      grid.appendChild(node);
+    });
+  }
+
+  document.getElementById('search').addEventListener('input', e=>{
+    const q = e.target.value.toLowerCase();
+    render(games.filter(g => (g.title+' '+g.desc+' '+(g.tags||[]).join(' ')).toLowerCase().includes(q)));
+  });
+
+  render(games);
 }
 
-header {
-  display: flex;
-  gap: 1rem;
-  padding: 1rem;
-  background: #1e293b;
-  align-items: center;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 1.5rem;
-  color: #fff;
-}
-
-#search {
-  flex: 1;
-  padding: 8px;
-  border-radius: 4px;
-  border: none;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1rem;
-  padding: 1rem;
-}
-
-.card {
-  background: #1e293b;
-  border-radius: 8px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-
-.thumb {
-  width: 100%;
-  height: 140px;
-  object-fit: cover;
-}
-
-.info {
-  padding: 1rem;
-}
-
-.title {
-  margin: 0 0 0.5rem;
-  font-size: 1.2rem;
-  color: #fff;
-}
-
-.desc {
-  margin: 0 0 1rem;
-  font-size: 0.9rem;
-}
-
-.download {
-  display: inline-block;
-  padding: 0.5rem 1rem;
-  background: #38bdf8;
-  color: #000;
-  text-decoration: none;
-  border-radius: 4px;
-  font-weight: bold;
-}
+init().catch(e=>console.error(e));
