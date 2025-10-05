@@ -7,10 +7,10 @@
     "downloadUrl": "https://store.steampowered.com/app/1011670/"
   },
   {
-    "id": "mygame",
-    "title": "Mijn Eigen Game",
-    "desc": "Een door mij gemaakte gratis game!",
-    "thumb": "https://picsum.photos/seed/mijngame/600/300",
+    "id": "game2",
+    "title": "Mijn Tweede Game",
+    "desc": "Nog een leuke game met een downloadknop.",
+    "thumb": "https://picsum.photos/seed/game2/600/300",
     "downloadUrl": "https://example.com/mijngame.zip"
   }
 ]
